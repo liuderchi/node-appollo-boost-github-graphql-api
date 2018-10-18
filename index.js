@@ -62,8 +62,9 @@ client
     const { pageInfo, edges } = result.data.organization.repositories;
     const { endCursor, hasNextPage } = pageInfo;
 
-    console.log('second page', edges.length);
-    console.log('endCursor', endCursor);
+    const { organization} = result.data
+    console.log({ 'first page': edges.length });
+    console.log({ endCursor });
 
     return pageInfo;
   })
@@ -86,8 +87,8 @@ client
     const { pageInfo, edges } = result.data.organization.repositories;
     const { endCursor, hasNextPage } = pageInfo;
 
-    console.log('second page', edges.length);
-    console.log('endCursor', endCursor);
+    console.log({ 'second page': edges.length });
+    console.log({ endCursor });
 
     return pageInfo;
   })
@@ -120,9 +121,11 @@ const REMOVE_STAR = gql`
 
 client
   .mutate({
-    mutation: ADD_STAR,
+    // mutation: ADD_STAR,
+    mutation: REMOVE_STAR,
     variables: {
       repositoryId: 'MDEwOlJlcG9zaXRvcnk2MzM1MjkwNw==',
+      // https://api.github.com/repos/the-road-to-learn-react/the-road-to-learn-react
     },
   })
-  .then(console.log);
+  .then(res => console.log(JSON.stringify(res, null, 2)));
